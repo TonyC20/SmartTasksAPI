@@ -1,0 +1,514 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartTasksAPI</name>
+    </assembly>
+    <members>
+        <member name="P:SmartTasksAPI.Controllers.AuthenticationRequestBody.Username">
+            <summary>
+            Account username
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Controllers.AuthenticationRequestBody.Password">
+            <summary>
+            Password requires at least 1 digit and at least 5 characters
+            </summary>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.AuthenticationController.Create(SmartTasksAPI.Controllers.AuthenticationRequestBody)">
+            <summary>
+            Creates a user account from a username and password
+            </summary>
+            <param name="body"></param>
+            <remarks>
+            Pass in the desired username and password into the request body.<br/>
+            Note: The password requires at least 1 digit and at least 5 characters. <br/><br/>
+            Sample request:
+                
+                POST api/v1/account/create
+                {
+                    "password": "customPassword1",
+                    "username": "customUsername"
+                }
+            
+            </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.AuthenticationController.Authenticate(SmartTasksAPI.Controllers.AuthenticationRequestBody)">
+             <summary>
+             Authenticates a user and returns a JWT security token if successful
+             </summary>
+             <param name="body">Pass in the username and password for the account in the body</param>
+             <remarks>
+             Note: The token expires after 120 minutes have passed.<br/>
+             Sample request:
+            
+                 POST api/v1/account/authenticate
+                 {
+                     "password": "customPassword1",
+                     "username": "customUsername"
+                 }
+             
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.ChecklistsController.GetChecklists(System.String,System.Int32,System.Int32)">
+             <summary>
+             Gets all checklists for an authenticated user
+             </summary>
+             <param name="searchQuery">A query that is searched for in checklist names</param>
+             <param name="pageNumber">The page number of the page to return</param>
+             <param name="pageSize">The size of each page</param>
+             <remarks>
+             Sample request:
+            
+                 GET /api/v1/checklists
+             
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.ChecklistsController.GetChecklist(System.Int32)">
+             <summary>
+             Gets the checklist with ID checklistId including its list of tasks
+             </summary>
+             <param name="checklistId">The Id of the checklist to return</param>
+             <returns></returns>
+             <remarks>
+             Sample request:
+            
+                 GET /api/v1/checklists/1
+             
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.ChecklistsController.CreateChecklist(SmartTasksAPI.Models.ChecklistForCreationDto)">
+             <summary>
+             Creates a checklist from the passed in parameters
+             </summary>
+             <param name="checklist"></param>
+             <remarks>
+             Note: Pass in the color in HEX format.<br/>
+             
+             Sample request:
+            
+                 POST /api/v1/checklists
+                 {
+                     "name": "new list",
+                     "color": "#FFFFFF"
+                 }
+             
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.ChecklistsController.DeleteChecklist(System.Int32)">
+             <summary>
+             Deletes the checklist with ID checklistId and all its contained tasks
+             </summary>
+             <param name="checklistId">The Id of the checklist to be deleted</param>
+             <remarks>
+             Note: This will delete all tasks contained within the checklist <br/>
+             
+             Sample request:
+            
+                 DELETE /api/v1/checklists/1
+            
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.ChecklistsController.UpdateChecklist(System.Int32,SmartTasksAPI.Models.ChecklistForUpdateDto)">
+             <summary>
+             Updates the checklist with ID checklistId
+             </summary>
+             <param name="checklistId">The Id of the checklist to be updated</param>
+             <param name="checklist"></param>
+             <remarks>
+             Sample request:
+            
+                 PUT /api/v1/checklists/1
+                 {
+                     "name": "updated name",
+                     "color": "#FFFFFF"
+                 }
+             
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.ChecklistsController.PartiallyUpdateChecklist(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{SmartTasksAPI.Models.ChecklistForUpdateDto})">
+            <summary>
+            Partially updates the checklist with ID checklistId
+            </summary>
+            <param name="checklistId">The Id of the checklist to update</param>
+            <param name="patchDocument"></param>
+            <remarks>
+            Note: See <a href="https://jsonpatch.com">Json patch</a> for more information.<br/>
+             
+            Sample request:
+            
+                PATCH /api/v1/checklists/1
+                [{
+                    "op": "replace",
+                    "path": "/name",
+                    "value": "New name" 
+                }]
+            
+            </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.TaskItemsController.GetTasks(System.Int32)">
+             <summary>
+             Gets all tasks from the checklist with ID checklistId
+             </summary>
+             <param name="checklistId">The Id of the checklist</param>
+             <remarks>
+             Sample request:
+            
+                 GET api/v1/checklists/1/tasks
+            
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.TaskItemsController.GetTask(System.Int32,System.Int32)">
+             <summary>
+             Gets the task with ID taskId from the checklist with ID checklistId
+             </summary>
+             <param name="checklistId">The Id of the checklist</param>
+             <param name="taskId">The Id of the task</param>
+             <remarks>
+             Sample request:
+            
+                 GET /api/v1/checklists/1/tasks/1
+             
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.TaskItemsController.CreateTask(System.Int32,SmartTasksAPI.Models.TaskItemForCreationDto)">
+             <summary>
+             Creates a task in the checklist with ID checklistId
+             </summary>
+             <param name="checklistId">The Id of the checklist</param>
+             <param name="taskItem"></param>
+             <remarks>
+             Sample request:
+            
+                 POST /api/v1/checklists/1/tasks
+                 {
+                     "name": "new name",
+                     "description": "new description",
+                     "dueDate": "2022-09-01T03:39:25.993Z",
+                     "priority": 0,
+                     "isCompleted": false
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.TaskItemsController.DeleteTask(System.Int32,System.Int32)">
+             <summary>
+             Deletes the task with ID taskId from the checklist with ID checklistId
+             </summary>
+             <param name="checklistId">The ID of the checklist</param>
+             <param name="taskId">THe ID of the task to be deleted</param>
+             <remarks>
+             Sample request:
+            
+                 DELETE /api/v1/checklists/1/tasks/1
+            
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.TaskItemsController.UpdateTask(System.Int32,System.Int32,SmartTasksAPI.Models.TaskItemForUpdateDto)">
+             <summary>
+             Updates the task with ID taskId from the checklist with ID checklistId
+             </summary>
+             <param name="checklistId">The Id of the checklist</param>
+             <param name="taskId">The Id of the task to be updated</param>
+             <param name="task"></param>
+             <remarks>
+             Sample request:
+            
+                 PUT /api/v1/checklists/1/tasks/1
+                 {
+                     "name": "updated name",
+                     "description": "updated description",
+                     "dueDate": "2025-05-01T03:39:25.993Z",
+                     "priority": 2,
+                     "isCompleted": true
+                 }
+             
+             </remarks>
+        </member>
+        <member name="M:SmartTasksAPI.Controllers.TaskItemsController.PartiallyUpdateTask(System.Int32,System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{SmartTasksAPI.Models.TaskItemForUpdateDto})">
+            <summary>
+            Partially updates the task with ID taskId from the checklist with ID checklistId
+            </summary>
+            <param name="checklistId"></param>
+            <param name="taskId"></param>
+            <param name="patchDocument"></param>
+            <remarks>
+            Note: See <a href="https://jsonpatch.com">Json patch</a> for more information.<br/>
+            Sample request:
+            
+                PATCH /api/v1/checklists/1/tasks/1
+                [{
+                    "op": "replace",
+                    "path": "/description",
+                    "value": "updated description" 
+                }]
+            
+            </remarks>
+        </member>
+        <member name="P:SmartTasksAPI.DbContexts.SmartTasksContext.Checklists">
+            <summary>
+            Checklists stored in the database
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.DbContexts.SmartTasksContext.TaskItems">
+            <summary>
+            Tasks stored in the database
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Entities.Checklist">
+            <summary>
+            Checklist containing a list of tasks
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.Checklist.Id">
+            <summary>
+            Unique Id of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.Checklist.Name">
+            <summary>
+            Name of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.Checklist.Color">
+            <summary>
+            Color of the checklist in hex format
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.Checklist.Items">
+            <summary>
+            List of tasks in the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.Checklist.User">
+            <summary>
+            Associated user
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Entities.TaskItem">
+            <summary>
+            Contains information for a task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.TaskItem.Id">
+            <summary>
+            Unique Id of the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.TaskItem.Name">
+            <summary>
+            Name of the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.TaskItem.Description">
+            <summary>
+            Description for the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.TaskItem.DueDate">
+            <summary>
+            Date and time of the task in ISO 8601 format
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.TaskItem.Priority">
+            <summary>
+            Task priority level
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.TaskItem.IsCompleted">
+            <summary>
+            Whether or not the task is completed
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Entities.TaskItem.Checklist">
+            <summary>
+            Checklist that the task belongs to
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Entities.UserAccount">
+            <summary>
+            User account for the app.
+            Can add custom properties in the future
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Models.ChecklistDto">
+            <summary>
+            Checklist: Schema used in GET requests
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistDto.Id">
+            <summary>
+            Unique Id of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistDto.Name">
+            <summary>
+            Name of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistDto.Color">
+            <summary>
+            Color of the checklist in hex format
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Models.ChecklistForCreationDto">
+            <summary>
+            Checklist: Schema used in POST requests
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistForCreationDto.Name">
+            <summary>
+            Name of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistForCreationDto.Color">
+            <summary>
+            Color of the checklist in hex format
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Models.ChecklistForUpdateDto">
+            <summary>
+            Checklist: Schema used in PUT and PATCH requests
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistForUpdateDto.Name">
+            <summary>
+            Name of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistForUpdateDto.Color">
+            <summary>
+            Color of the checklist in hex format
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Models.ChecklistWithTasksDto">
+            <summary>
+            Checklist containing a list of tasks: Schema used in GET requests
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistWithTasksDto.Id">
+            <summary>
+            Unique Id of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistWithTasksDto.Name">
+            <summary>
+            Name of the checklist
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistWithTasksDto.Color">
+            <summary>
+            Color of the checklist in hex format
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.ChecklistWithTasksDto.Items">
+            <summary>
+            List of tasks in the checklist
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Models.TaskItemDto">
+            <summary>
+            Contains information for a task. Schema used for GET requests
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemDto.Id">
+            <summary>
+            Unique Id of the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemDto.Name">
+            <summary>
+            Name of the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemDto.Description">
+            <summary>
+            Description for the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemDto.DueDate">
+            <summary>
+            Date and time of the task in ISO 8601 format
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemDto.Priority">
+            <summary>
+            Task priority level
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemDto.IsCompleted">
+            <summary>
+            Whether or not the task is completed
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Models.TaskItemForCreationDto">
+            <summary>
+            Contains information for a task. Schema used for POST requests
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForCreationDto.Name">
+            <summary>
+            Name of the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForCreationDto.Description">
+            <summary>
+            Description for the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForCreationDto.DueDate">
+            <summary>
+            Date and time of the task in ISO 8601 format
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForCreationDto.Priority">
+            <summary>
+            Task priority level
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForCreationDto.IsCompleted">
+            <summary>
+            Whether or not the task is completed
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Models.TaskItemForUpdateDto">
+            <summary>
+            Contains information for a task. Schema used for PUT and PATCH requests
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForUpdateDto.Name">
+            <summary>
+            Name of the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForUpdateDto.Description">
+            <summary>
+            Description for the task
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForUpdateDto.DueDate">
+            <summary>
+            Date and time of the task in ISO 8601 format
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForUpdateDto.Priority">
+            <summary>
+            Task priority level
+            </summary>
+        </member>
+        <member name="P:SmartTasksAPI.Models.TaskItemForUpdateDto.IsCompleted">
+            <summary>
+            Whether or not the task is completed
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Profiles.ChecklistProfile">
+            <summary>
+            Configuration class for AutoMapper
+            </summary>
+        </member>
+        <member name="T:SmartTasksAPI.Profiles.TaskItemProfile">
+            <summary>
+            Configuration class for AutoMapper
+            </summary>
+        </member>
+    </members>
+</doc>

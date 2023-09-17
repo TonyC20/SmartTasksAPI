@@ -43,7 +43,6 @@ namespace SmartTasksAPI.Controllers
         /// </summary>
         /// <param name="body"></param>
         /// <remarks>
-        /// Pass in the desired username and password into the request body.<br/>
         /// Note: The password requires at least 1 digit and at least 5 characters. <br/><br/>
         /// Sample request:
         ///     
@@ -76,7 +75,7 @@ namespace SmartTasksAPI.Controllers
         /// <summary>
         /// Authenticates a user and returns a JWT security token if successful
         /// </summary>
-        /// <param name="body">Pass in the username and password for the account in the body</param>
+        /// <param name="body"></param>
         /// <remarks>
         /// Note: The token expires after 120 minutes have passed.<br/>
         /// Sample request:

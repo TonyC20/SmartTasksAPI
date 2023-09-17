@@ -53,7 +53,7 @@ builder.Services.AddSwaggerGen(setupAction =>
     setupAction.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"." +
-                      "\nObtain a token at /api/v1/account/authenticate",
+                      "\nObtain a token at `/api/v1/account/authenticate`",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
@@ -101,7 +101,7 @@ builder.Services.AddIdentityCore<UserAccount>(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new()
+        options.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
             ValidateAudience = true,

@@ -44,9 +44,17 @@ namespace SmartTasksAPI.Services
 
         }
 
-        public async Task<Checklist?> GetChecklistAsync(int checklistId)
+        public async Task<Checklist?> GetChecklistAsync(int checklistId, bool includeTasks = false)
         {
-            var checklist = await _context.Checklists.FirstOrDefaultAsync(c => c.Id == checklistId);
+            var collection = _context.Checklists.Where(c => c.Id == checklistId);
+
+            // Whether to include tasks
+            if (includeTasks)
+            {
+                collection = collection.Include(c => c.Items);
+            }
+
+            var checklist = await collection.FirstOrDefaultAsync();
             return checklist;
         }
 

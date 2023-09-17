@@ -22,6 +22,6 @@ namespace SmartTasksAPI.Models
         /// <summary>
         /// List of tasks in the checklist
         /// </summary>
-        public ICollection<TaskItem> Items { get; set; } = new List<TaskItem>();
+        public ICollection<TaskItemDto> Items { get; set; } = new List<TaskItemDto>();
     }
 }

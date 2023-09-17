@@ -97,11 +97,11 @@
               "type": "Microsoft.ApiManagement/service/apis",
               "name": "SmartTasksAPIapi/SmartTasksAPI",
               "properties": {
-                "displayName": "SmartTasksAPI",
+                "displayName": "SmartTasks Web API",
                 "apiRevision": "1",
-                "description": null,
+                "description": "A Web API for managing ToDo checklists and tasks",
                 "subscriptionRequired": true,
-                "serviceUrl": null,
+                "serviceUrl": "https://smarttasks.azurewebsites.net",
                 "path": "",
                 "protocols": [
                   "https"

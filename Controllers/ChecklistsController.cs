@@ -104,7 +104,7 @@ namespace SmartTasksAPI.Controllers
             }
 
             // Gets requested checklist
-            var checklistEntity = await _repository.GetChecklistAsync(checklistId);
+            var checklistEntity = await _repository.GetChecklistAsync(checklistId, includeTasks: true);
             return Ok(_mapper.Map<ChecklistWithTasksDto>(checklistEntity));
         }
 

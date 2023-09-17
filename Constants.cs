@@ -21,8 +21,8 @@
 
         public const string AppDescription = "A Web API for managing ToDo lists. <a href=\"https://github.com/TonyC20/SmartTasksAPI\">(Source code)</a><br/><br/>" +
                                              "To use this API:<br/><br/>" +
-                                             "1. Create an account at api/v1/account/create<br/>" +
-                                             "2. Obtain a security token from api/v1/account/authenticate <br/>" +
+                                             "1. Create an account at `api/v1/account/create`<br/>" +
+                                             "2. Obtain a security token at `api/v1/account/authenticate` <br/>" +
                                              "3. Pass in the header `Authorization: Bearer <token>` for all subsequent requests <br/>" +
                                              "3B. Alternatively use this interactive documentation by pasting the token into " +
                                              "the green \"Authorize\" button in the top right <br/><br/>" +

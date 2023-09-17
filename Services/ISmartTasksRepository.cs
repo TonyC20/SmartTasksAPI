@@ -6,7 +6,7 @@ public interface ISmartTasksRepository
 {
     Task<(IEnumerable<Checklist>, PaginationMetadata)> GetChecklistsForUserAsync(string userId, string? searchQuery,
         int pageNumber = 1, int pageSize = Constants.DefaultPageSize);
-    Task<Checklist?> GetChecklistAsync(int checklistId);
+    Task<Checklist?> GetChecklistAsync(int checklistId, bool includeTasks = false);
     Task CreateChecklistAsync(Checklist checklist);
     Task DeleteChecklistAsync(int checklistId);
     Task<bool> ChecklistExistsAsync(int checklistId);
